@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1b2a4a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Fluxograma EMat" />
+  <title>Fluxograma — Engenharia de Materiais UFPB</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="cabecalho-titulos">
+      <h1>Engenharia de Materiais — UFPB</h1>
+      <p>Centro de Tecnologia · Campus I · Acompanhamento de disciplinas e horários</p>
+    </div>
+    <div class="area-docente">
+      <button id="btn-modo-docente" class="btn-secundario" type="button">🔓 Sou docente</button>
+      <div id="popover-senha-docente" class="popover-senha" hidden>
+        <form id="form-senha-docente">
+          <input
+            type="password"
+            id="input-senha-docente"
+            placeholder="Senha de docente"
+            autocomplete="off"
+          />
+          <div class="popover-senha-botoes">
+            <button type="submit" class="btn-primario">Entrar</button>
+            <button type="button" id="btn-cancelar-senha-docente" class="btn-secundario">Cancelar</button>
+          </div>
+        </form>
+        <p class="erro-senha-docente" id="erro-senha-docente" hidden>Senha incorreta.</p>
+      </div>
+    </div>
+    <button id="btn-limpar-dados" class="btn-secundario" title="Apagar progresso e horários salvos neste navegador">
+      Limpar dados salvos
+    </button>
+  </header>
+
+  <nav class="abas">
+    <button class="aba-botao ativo" data-aba="fluxograma">Fluxograma</button>
+    <button class="aba-botao" data-aba="horarios">Horários</button>
+    <button class="aba-botao" data-aba="ofertadas">Ofertadas DEMAT</button>
+  </nav>
+
+  <main>
+    <section id="painel-fluxograma" class="painel painel-ativo"></section>
+    <section id="painel-horarios" class="painel"></section>
+    <section id="painel-ofertadas" class="painel"></section>
+  </main>
+
+  <footer class="rodape">
+    Dados salvos apenas neste navegador (localStorage). Fonte: fluxograma oficial do curso.
+  </footer>
+
+  <!-- Exportação de PDF (aba Fluxograma → "Meu horário deste período") -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="data.js"></script>
+  <script src="horarios-oficiais.js"></script>
+  <script src="state.js"></script>
+  <script src="render.js"></script>
+  <script src="horarios.js"></script>
+  <script src="ofertadas.js"></script>
+  <script src="mobile.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

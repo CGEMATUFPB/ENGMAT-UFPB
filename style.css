@@ -1,0 +1,1377 @@
+:root {
+  --azul-escuro: #1b2a4a;
+  --azul: #2f5fa8;
+  --azul-claro: #e3ecfb;
+  --verde: #2e8b57;
+  --verde-claro: #e6f4ea;
+  --laranja: #e07a2c;
+  --laranja-claro: #fdecd8;
+  --cinza-100: #f5f6f8;
+  --cinza-200: #e6e8ec;
+  --cinza-400: #b7bcc6;
+  --cinza-600: #6b7280;
+  --texto: #1f2430;
+  --branco: #ffffff;
+  --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--cinza-100);
+  color: var(--texto);
+}
+
+.cabecalho {
+  background: var(--azul-escuro);
+  color: var(--branco);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.cabecalho-titulos h1 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.cabecalho-titulos p {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: #c7d3ea;
+}
+
+.btn-secundario {
+  background: transparent;
+  border: 1px solid #4f6aa0;
+  color: #dce4f5;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.btn-secundario:hover { background: #2a3b64; }
+
+/* ---------- Acesso: estudante (só Fluxograma) x docente (senha única) ---------- */
+
+body.modo-estudante .aba-botao[data-aba="horarios"],
+body.modo-estudante .aba-botao[data-aba="ofertadas"] {
+  display: none;
+}
+
+.area-docente {
+  position: relative;
+}
+
+.popover-senha {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--branco);
+  color: var(--texto);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  padding: 14px;
+  width: 220px;
+  z-index: 20;
+}
+
+.form-senha-docente,
+#form-senha-docente {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#input-senha-docente {
+  padding: 8px 10px;
+  border: 1px solid var(--cinza-400);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.popover-senha-botoes {
+  display: flex;
+  gap: 8px;
+}
+
+.popover-senha-botoes .btn-primario,
+.popover-senha-botoes .btn-secundario {
+  flex: 1;
+  font-size: 0.8rem;
+  padding: 7px 10px;
+}
+
+.btn-primario {
+  background: var(--azul);
+  border: none;
+  color: var(--branco);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.btn-primario:hover { opacity: 0.9; }
+
+.popover-senha .btn-secundario {
+  background: var(--cinza-100);
+  border: 1px solid var(--cinza-400);
+  color: var(--texto);
+}
+.popover-senha .btn-secundario:hover { background: var(--cinza-200); }
+
+.erro-senha-docente {
+  margin: 10px 0 0;
+  font-size: 0.8rem;
+  color: #b3261e;
+}
+
+.abas {
+  display: flex;
+  gap: 4px;
+  padding: 0 24px;
+  background: var(--branco);
+  border-bottom: 1px solid var(--cinza-200);
+}
+
+.aba-botao {
+  border: none;
+  background: transparent;
+  padding: 14px 18px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: var(--cinza-600);
+  border-bottom: 3px solid transparent;
+}
+.aba-botao.ativo {
+  color: var(--azul-escuro);
+  border-bottom-color: var(--azul);
+  font-weight: 600;
+}
+
+main { padding: 20px 24px 60px; max-width: 1500px; margin: 0 auto; }
+
+.painel { display: none; }
+.painel.painel-ativo { display: block; }
+
+/* ---------- Barra de progresso ---------- */
+.barra-progresso-wrap { margin-bottom: 14px; }
+.barra-progresso-info { font-size: 0.9rem; margin-bottom: 6px; color: var(--texto); }
+.barra-progresso-fundo {
+  height: 10px;
+  background: var(--cinza-200);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.barra-progresso-preenchida {
+  height: 100%;
+  background: linear-gradient(90deg, var(--azul), var(--verde));
+  transition: width 0.3s ease;
+}
+
+/* ---------- Legenda ---------- */
+.legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--cinza-600);
+  margin-bottom: 12px;
+}
+.legenda-item { display: flex; align-items: center; gap: 6px; }
+.amostra {
+  width: 14px; height: 14px; border-radius: 4px; display: inline-block;
+  border: 1px solid var(--cinza-400);
+}
+.amostra.disponivel { background: #fff8dd; border-color: #e0c15a; }
+.amostra.concluida { background: #d9f2e3; border-color: var(--verde); }
+.amostra.depto-materiais { background: var(--azul-claro); border-color: var(--azul); }
+.amostra.depto-outros { background: var(--verde-claro); border-color: var(--verde); }
+.legenda-dica { font-style: italic; }
+
+/* ---------- Conteúdos Complementares Flexíveis ---------- */
+.secao-flexiveis {
+  margin-top: 18px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.secao-flexiveis h3 { margin: 0 0 6px; font-size: 1rem; color: var(--azul-escuro); }
+.lista-flexiveis {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+.item-flexivel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cinza-100);
+  border-radius: 6px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.item-flexivel input { cursor: pointer; }
+.item-flexivel-nome { flex: 1; font-size: 0.85rem; }
+.item-flexivel-creditos { font-size: 0.72rem; color: var(--cinza-600); font-weight: 600; }
+.item-flexivel.concluida { background: #d9f2e3; }
+.item-flexivel.concluida .item-flexivel-nome { text-decoration: line-through; color: var(--cinza-600); }
+
+/* ---------- Tabela do fluxograma ---------- */
+.tabela-scroll { overflow-x: auto; border: 1px solid var(--cinza-200); border-radius: var(--radius); background: var(--branco); }
+
+.tabela-fluxograma { border-collapse: collapse; width: 100%; min-width: 1400px; }
+.tabela-fluxograma th, .tabela-fluxograma td {
+  border: 1px solid var(--cinza-200);
+  padding: 6px;
+  vertical-align: top;
+}
+.tabela-fluxograma thead th {
+  background: var(--azul-escuro);
+  color: var(--branco);
+  font-size: 0.8rem;
+  padding: 10px 6px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.th-linha {
+  background: var(--cinza-200) !important;
+  color: var(--texto) !important;
+  font-weight: 700;
+  text-align: center;
+  width: 28px;
+}
+.linha-totais th, .linha-totais td {
+  background: var(--cinza-200);
+  font-size: 0.72rem;
+  text-align: center;
+  color: var(--cinza-600);
+  padding: 6px 4px;
+}
+
+/* ---------- Card de disciplina ---------- */
+.card-disciplina {
+  border: 1.5px solid var(--cinza-400);
+  border-radius: var(--radius);
+  padding: 6px 8px;
+  min-width: 150px;
+  min-height: 92px;
+  cursor: pointer;
+  background: var(--branco);
+  transition: opacity 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card-disciplina:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+
+.card-disciplina.depto-materiais { background: var(--azul-claro); border-color: #b7c9ec; }
+.card-disciplina.depto-outros { background: var(--verde-claro); border-color: #bfe0cb; }
+
+.card-disciplina.disponivel { border-color: #e0c15a; box-shadow: inset 0 0 0 1.5px #f5da8a; }
+
+.card-disciplina.concluida {
+  background: #d9f2e3;
+  border-color: var(--verde);
+}
+.card-disciplina.concluida .card-nome { text-decoration: line-through; color: var(--cinza-600); }
+
+.card-disciplina.selecionada { border-color: var(--azul-escuro); box-shadow: 0 0 0 2px var(--azul-escuro); }
+.card-disciplina.eh-prerequisito { border-color: var(--azul); box-shadow: 0 0 0 2px var(--azul); background: #dbe8fb; }
+.card-disciplina.eh-dependente { border-color: var(--laranja); box-shadow: 0 0 0 2px var(--laranja); background: var(--laranja-claro); }
+.card-disciplina.esmaecida { opacity: 0.35; }
+
+/* ---------- Modo "o que posso cursar agora" (caminho a partir do progresso atual) ---------- */
+.card-disciplina.caminho-disponivel {
+  position: relative;
+  border: 2px solid #c99a1f;
+  box-shadow: 0 0 0 3px rgba(224, 193, 90, 0.45);
+  background: #fffaf0;
+  cursor: default;
+}
+.card-disciplina.caminho-disponivel::after {
+  content: "pode cursar";
+  position: absolute;
+  top: -9px;
+  right: 6px;
+  background: #c99a1f;
+  color: var(--branco);
+  font-size: 0.6rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+}
+.card-disciplina.caminho-bloqueada { opacity: 0.3; filter: grayscale(0.4); cursor: default; }
+
+.info-caminho {
+  background: #fff8dd;
+  border: 1px solid #e0c15a;
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 0.82rem;
+  color: var(--azul-escuro);
+  margin: 0 0 14px;
+}
+
+.card-topo { display: flex; justify-content: space-between; align-items: center; }
+.check-concluida input { cursor: pointer; }
+.card-creditos { font-size: 0.7rem; color: var(--cinza-600); font-weight: 600; }
+.card-nome { font-size: 0.78rem; line-height: 1.2; margin: 4px 0; font-weight: 600; }
+.card-rodape { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--cinza-600); }
+.card-codigo { font-weight: 700; }
+.card-prereq { font-style: italic; }
+
+/* ---------- Horários ---------- */
+.seletor-periodos { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.btn-periodo {
+  border: 1px solid var(--cinza-400);
+  background: var(--branco);
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+.btn-periodo.ativo { background: var(--azul-escuro); color: var(--branco); border-color: var(--azul-escuro); }
+
+.dica-horarios { font-size: 0.85rem; color: var(--cinza-600); margin: 6px 0 16px; }
+
+.lista-cartoes-horario { display: flex; flex-direction: column; gap: 12px; }
+
+.cartao-horario {
+  background: var(--branco);
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.cartao-horario-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+.cartao-horario-topo .card-codigo { margin-right: 8px; color: var(--azul); }
+.cartao-horario-topo .card-creditos { margin-left: 8px; }
+
+.badge-salvo {
+  font-size: 0.75rem;
+  color: var(--verde);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.badge-salvo.visivel { opacity: 1; }
+
+.card-optativa-escolhida {
+  margin-left: 8px;
+  font-size: 0.78rem;
+  color: var(--verde);
+  font-weight: 600;
+}
+.card-optativa-escolhida::before { content: "✓ "; }
+
+.opcoes-optativas {
+  background: var(--azul-claro);
+  border: 1px solid #b9cdec;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.opcoes-optativas-titulo {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--azul-escuro);
+}
+.opcao-optativa {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-200);
+  border-radius: 6px;
+  padding: 8px 10px;
+  flex-wrap: wrap;
+}
+.opcao-optativa-ativa {
+  border-color: var(--verde);
+  background: var(--verde-claro);
+}
+.opcao-optativa-info { display: flex; flex-direction: column; gap: 2px; font-size: 0.85rem; }
+.opcao-optativa-horario { font-size: 0.76rem; color: var(--cinza-600); }
+.btn-usar-optativa {
+  border: 1px solid var(--azul);
+  background: var(--branco);
+  color: var(--azul);
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+.opcao-optativa-ativa .btn-usar-optativa {
+  border-color: var(--verde);
+  background: var(--verde);
+  color: var(--branco);
+  cursor: default;
+}
+
+.lista-slots { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+
+/* Quando a disciplina tem mais de uma turma, as linhas de horário vêm agrupadas por turma
+   em vez de uma lista única sem distinção. */
+.grupo-turma { display: flex; flex-direction: column; gap: 8px; }
+.grupo-turma + .grupo-turma { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--cinza-400); }
+.titulo-grupo-turma {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--azul-escuro);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.linha-horario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  background: var(--cinza-100);
+  padding: 8px;
+  border-radius: 6px;
+}
+.linha-horario select, .linha-horario input {
+  border: 1px solid var(--cinza-400);
+  border-radius: 5px;
+  padding: 6px 8px;
+  font-size: 0.82rem;
+}
+.campo-sala { width: 100px; }
+.campo-turma { width: 70px; }
+.campo-professor { width: 190px; }
+.ate { font-size: 0.8rem; color: var(--cinza-600); }
+
+.btn-remover-slot {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #c0392b;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.obs-slot {
+  font-size: 0.72rem;
+  color: var(--cinza-600);
+  font-style: italic;
+  margin: -4px 0 4px 8px;
+}
+
+.acoes-cartao-horario { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn-add-slot {
+  border: 1px dashed var(--azul);
+  background: transparent;
+  color: var(--azul);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.btn-add-slot:hover { background: var(--azul-claro); }
+
+.btn-restaurar-oficial {
+  border: 1px dashed var(--cinza-400);
+  background: transparent;
+  color: var(--cinza-600);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.btn-restaurar-oficial:hover { background: var(--cinza-100); }
+
+.sem-horario { color: var(--cinza-600); font-size: 0.85rem; font-style: italic; }
+
+.secao-outras-ofertas {
+  margin-top: 20px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+}
+.secao-outras-ofertas summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--azul-escuro);
+}
+.lista-outras-ofertas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.item-outra-oferta {
+  background: var(--cinza-100);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.8rem;
+}
+.outra-oferta-depto {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--cinza-600);
+  margin-top: 2px;
+}
+.outra-oferta-linha { margin-top: 4px; font-size: 0.75rem; }
+.outra-oferta-docente { color: var(--cinza-600); font-style: italic; }
+
+.rodape {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--cinza-600);
+  padding: 20px;
+}
+
+@media (max-width: 720px) {
+  .cabecalho { flex-direction: column; align-items: flex-start; }
+  main { padding: 14px; }
+}
+
+/* ---------- Controles Lista/Matriz ---------- */
+.barra-controle-horarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.seletor-modo { display: flex; gap: 4px; background: var(--cinza-200); border-radius: 20px; padding: 3px; }
+.btn-modo {
+  border: none;
+  background: transparent;
+  padding: 7px 14px;
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--cinza-600);
+}
+.btn-modo.ativo { background: var(--azul-escuro); color: var(--branco); }
+
+/* ---------- Agrupamento por departamento (Lista) ---------- */
+.grupo-departamento { margin-bottom: 22px; }
+.titulo-departamento {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: var(--azul-escuro);
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--cinza-200);
+}
+.cartoes-do-grupo { display: flex; flex-direction: column; gap: 12px; }
+
+.ponto-depto {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* Cores por departamento — usadas na matriz, no agrupamento e nos filtros */
+.dcor-materiais { background: var(--azul-claro); border: 1px solid #7fa0d8; }
+.dcor-matematica { background: #efe3fb; border: 1px solid #b98fe0; }
+.dcor-fisica { background: #fdecd8; border: 1px solid #e0a15a; }
+.dcor-quimica { background: var(--verde-claro); border: 1px solid #6fbf8f; }
+.dcor-producao { background: #fff8dd; border: 1px solid #e0c15a; }
+.dcor-estatistica { background: #fbe3ec; border: 1px solid #e07aa8; }
+.dcor-economia { background: #d8f3f7; border: 1px solid #4bb7c4; }
+.dcor-administracao { background: #fde3d8; border: 1px solid #e08a5a; }
+.dcor-informatica { background: #dfe6f0; border: 1px solid #7a93b8; }
+.dcor-sociais { background: #eef2d8; border: 1px solid #a8b85a; }
+.dcor-letras { background: #fbe0e0; border: 1px solid #d97575; }
+.dcor-outro { background: var(--cinza-200); border: 1px solid var(--cinza-400); }
+.dcor-optativa { background: #efe3fb; border: 1px solid #a978d6; }
+
+.ponto-depto.dcor-materiais, .ponto-depto.dcor-matematica, .ponto-depto.dcor-fisica,
+.ponto-depto.dcor-quimica, .ponto-depto.dcor-producao, .ponto-depto.dcor-estatistica,
+.ponto-depto.dcor-economia, .ponto-depto.dcor-administracao, .ponto-depto.dcor-informatica,
+.ponto-depto.dcor-sociais, .ponto-depto.dcor-letras, .ponto-depto.dcor-outro { border-width: 2px; }
+
+/* ---------- Filtros de departamento ---------- */
+.filtros-departamento {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--radius);
+}
+.filtro-depto {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--texto);
+  cursor: pointer;
+  user-select: none;
+}
+.filtro-depto.desativado { color: var(--cinza-600); opacity: 0.5; }
+.filtro-depto input { cursor: pointer; }
+
+/* ---------- Matriz semanal ---------- */
+.tabela-matriz { border-collapse: collapse; width: 100%; min-width: 920px; background: var(--branco); table-layout: fixed; }
+.tabela-matriz th, .tabela-matriz td {
+  border: 1px solid var(--cinza-200);
+  padding: 4px;
+  text-align: center;
+  vertical-align: middle;
+}
+.tabela-matriz thead th {
+  background: var(--azul-escuro);
+  color: var(--branco);
+  font-size: 0.8rem;
+  padding: 8px 4px;
+  position: sticky;
+  top: 0;
+  width: 140px;
+}
+.th-horario {
+  font-size: 0.7rem;
+  color: var(--cinza-600);
+  background: var(--cinza-100);
+  white-space: nowrap;
+  width: 92px;
+}
+.tabela-matriz thead .th-horario { background: var(--azul-escuro); width: 92px; }
+
+.td-matriz { height: 56px; }
+.td-vazia {
+  background: repeating-linear-gradient(135deg, var(--cinza-100), var(--cinza-100) 6px, #eef0f3 6px, #eef0f3 12px);
+  color: var(--cinza-600);
+  font-size: 0.7rem;
+  font-style: italic;
+}
+.td-aula {
+  padding: 6px 8px;
+}
+.aula-codigo { font-size: 0.68rem; font-weight: 700; opacity: 0.8; }
+.aula-nome { font-size: 0.74rem; line-height: 1.2; font-weight: 600; margin-bottom: 2px; overflow-wrap: break-word; }
+.td-conflito { background: var(--laranja-claro); padding: 3px; }
+.aula-conflito-item {
+  border-radius: 5px;
+  padding: 3px 5px;
+  margin: 2px 0;
+}
+.aula-conflito-item .aula-nome { font-size: 0.68rem; margin-bottom: 0; }
+.aula-conflito-item .aula-codigo { font-size: 0.62rem; }
+
+.aula-professor {
+  font-size: 0.62rem;
+  color: var(--cinza-600);
+  font-style: italic;
+  overflow-wrap: break-word;
+  margin-top: 1px;
+}
+.aula-conflito-item .aula-professor { font-size: 0.58rem; }
+
+/* Célula da Matriz com a mesma disciplina em 2+ turmas no mesmo horário — não é conflito real,
+   então usa a cor normal do departamento, só separando cada turma dentro da célula. */
+.itens-multi-turma {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 3px;
+}
+.item-multi-turma {
+  border-top: 1px dashed rgba(0, 0, 0, 0.15);
+  padding-top: 3px;
+  position: relative;
+}
+.item-multi-turma:first-child { border-top: none; padding-top: 0; }
+.badge-turma {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+.item-multi-turma .aula-professor { margin-top: 1px; }
+.item-multi-turma .btn-remover-optativa-matriz { float: right; }
+
+.linha-quebra-turno td, .linha-quebra-turno th { border-top: 3px solid var(--cinza-400); }
+
+/* ---------- Aba Ofertadas DEMAT ---------- */
+.legenda-ofertadas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.chip-legenda {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.chip-legenda-conflito {
+  background: var(--laranja-claro);
+  border: 1px solid var(--laranja);
+  color: var(--azul-escuro);
+}
+.chip-legenda-janela {
+  background: #fff8dd;
+  border: 1px solid #e0c15a;
+  color: var(--azul-escuro);
+}
+
+.col-janela-tarde.td-vazia { background: repeating-linear-gradient(135deg, #fff8dd, #fff8dd 6px, #fdf1c8 6px, #fdf1c8 12px); }
+.col-janela-tarde.td-aula, .col-janela-tarde.td-conflito { box-shadow: inset 0 0 0 2px #e0c15a; }
+
+.marca-fora-alvo { font-size: 0.7em; }
+
+/* ---------- Proposta editável (Ofertadas DEMAT) ---------- */
+.acoes-proposta-topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 16px;
+}
+.btn-sugestao-automatica, .btn-descartar-proposta {
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.btn-sugestao-automatica {
+  border: 1px solid var(--azul);
+  background: var(--azul);
+  color: var(--branco);
+}
+.btn-descartar-proposta {
+  border: 1px solid #c0392b;
+  background: var(--branco);
+  color: #c0392b;
+}
+
+.resumo-sugestao {
+  background: var(--verde-claro);
+  border: 1px solid #6fbf8f;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-size: 0.85rem;
+}
+.detalhes-sugestao { margin-top: 6px; }
+.detalhes-sugestao summary { cursor: pointer; font-size: 0.8rem; }
+.detalhes-sugestao ul { margin: 6px 0 0; padding-left: 18px; font-size: 0.78rem; }
+
+.linha-fora-alvo {
+  background: var(--laranja-claro) !important;
+  border: 1px solid var(--laranja);
+}
+.chip-fora-alvo {
+  font-size: 0.68rem;
+  background: var(--laranja);
+  color: var(--branco);
+  padding: 2px 6px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.btn-remover-slot-proposta {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: #c0392b;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.btn-add-slot-proposta, .btn-restaurar-oficial-proposta {
+  border: 1px dashed var(--azul);
+  background: transparent;
+  color: var(--azul);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* ---------- Ofertadas DEMAT: config de optativas + bloco somente-leitura por período (v11) ---------- */
+
+.lista-optativas-config {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.linha-optativa-config {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--cinza-100);
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+}
+
+.linha-optativa-config input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; }
+
+.nome-optativa-config { flex: 1; }
+
+.linha-optativa-custom { background: var(--verde-claro); border-color: #a9d3b6; }
+
+.btn-remover-optativa-custom {
+  border: none;
+  background: transparent;
+  color: #c0392b;
+  cursor: pointer;
+  font-size: 0.78rem;
+}
+
+.form-nova-optativa {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.form-nova-optativa input[type="text"] { flex: 1; min-width: 180px; }
+
+.form-nova-optativa input,
+.form-nova-optativa button {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--cinza-400);
+  font-size: 0.85rem;
+}
+
+.form-nova-optativa input[type="number"] { width: 90px; }
+
+.form-nova-optativa button {
+  border: 1px solid var(--azul);
+  background: var(--azul);
+  color: var(--branco);
+  cursor: pointer;
+}
+
+.cartao-somente-leitura { background: var(--cinza-100); }
+
+.card-departamento {
+  font-size: 0.68rem;
+  color: var(--cinza-600);
+  text-align: right;
+  max-width: 45%;
+}
+
+.lista-slots-leitura { display: flex; flex-direction: column; gap: 4px; margin-bottom: 4px; }
+
+.linha-horario-leitura { font-size: 0.8rem; color: var(--texto); }
+
+.bloco-todas-periodo {
+  margin-top: 20px;
+  border: 1px dashed var(--cinza-400);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+}
+
+.bloco-todas-periodo summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--azul-escuro);
+}
+
+/* Botão "remover da lista" nos cards de optativa (Ofertadas DEMAT > Minha proposta > Lista) */
+.btn-remover-optativa-lista {
+  border: 1px solid #c0392b;
+  background: transparent;
+  color: #c0392b;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Botão "Salvar horário" explícito (aba Horários) */
+.acoes-salvar-horario {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.btn-salvar-horario {
+  border: 1px solid var(--azul);
+  background: var(--azul);
+  color: var(--branco);
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.confirmacao-salvo-horario {
+  font-size: 0.8rem;
+  color: var(--verde);
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.confirmacao-salvo-horario.visivel { opacity: 1; }
+
+/* Botão "remover" direto na célula da Matriz (Ofertadas DEMAT > Minha proposta) */
+.btn-remover-optativa-matriz {
+  float: right;
+  border: none;
+  background: transparent;
+  color: #c0392b;
+  cursor: pointer;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0 0 4px 4px;
+}
+
+/* ---------- "Cursando este período" (Fluxograma) ---------- */
+
+.check-cursando {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.6rem;
+  color: var(--cinza-600);
+  cursor: pointer;
+}
+
+.check-cursando input { cursor: pointer; width: 12px; height: 12px; }
+.rotulo-cursando { white-space: nowrap; }
+
+.check-cursando.desabilitado { cursor: not-allowed; opacity: 0.45; }
+.check-cursando.desabilitado input { cursor: not-allowed; }
+
+.amostra.cursando { background: #dbe8fb; border-color: var(--azul); }
+
+.card-disciplina.cursando:not(.concluida) {
+  border-color: var(--azul);
+  box-shadow: inset 0 0 0 1.5px #a9c3ee;
+}
+
+/* ---------- Ações do Fluxograma: baixar PDF do fluxograma / painel "Meu horário" ---------- */
+
+.acoes-fluxograma {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 4px 0 16px;
+}
+
+.btn-ver-meu-horario, .btn-baixar-pdf-horario, .btn-baixar-pdf-fluxograma, .btn-modo-caminho {
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-ver-meu-horario { border: 1px solid var(--azul); background: var(--azul); color: var(--branco); }
+.btn-baixar-pdf-horario { border: 1px solid var(--verde); background: var(--verde); color: var(--branco); }
+.btn-baixar-pdf-fluxograma { border: 1px solid var(--azul-escuro); background: var(--branco); color: var(--azul-escuro); }
+.btn-baixar-pdf-fluxograma:hover { background: var(--cinza-100); }
+.btn-modo-caminho { border: 1px solid #c99a1f; background: #fff8dd; color: var(--azul-escuro); }
+.btn-modo-caminho:hover { background: #fdeeb8; }
+.btn-modo-caminho.ativo { background: #e0c15a; border-color: #c99a1f; color: var(--azul-escuro); font-weight: 600; }
+
+/* ---------- Botão "marcar período inteiro como concluído" (cabeçalho da tabela) ---------- */
+
+.btn-marcar-periodo {
+  display: block;
+  margin: 6px auto 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  color: var(--branco);
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-size: 0.65rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-marcar-periodo:hover { background: rgba(255, 255, 255, 0.15); }
+.btn-marcar-periodo.marcado {
+  background: var(--verde);
+  border-color: var(--verde);
+}
+
+.painel-meu-horario {
+  background: var(--branco);
+  border: 1px solid var(--cinza-200);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.painel-meu-horario h3 { margin: 0 0 10px; font-size: 1rem; color: var(--azul-escuro); }
+
+.lista-disciplinas-cursando {
+  margin: 0 0 14px;
+  padding-left: 18px;
+  font-size: 0.82rem;
+  color: var(--texto);
+}
+
+.aviso-sem-horario-inline {
+  font-size: 0.72rem;
+  color: #9c5b12;
+  font-weight: 600;
+}
+
+.seletor-turma-cursando {
+  margin-left: 6px;
+  border: 1px solid var(--azul);
+  border-radius: 5px;
+  padding: 1px 4px;
+  font-size: 0.75rem;
+  color: var(--azul-escuro);
+  background: var(--azul-claro);
+  cursor: pointer;
+}
+
+.aviso-sem-horario {
+  background: var(--laranja-claro);
+  border: 1px solid var(--laranja);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: var(--azul-escuro);
+  margin: 0 0 14px;
+}
+
+/* =====================================================================
+   VERSÃO CELULAR
+   Tudo abaixo só muda o visual em telas de até 720px. No computador o
+   site continua exatamente igual. Os elementos .fluxo-mobile e
+   .dias-mobile existem sempre no HTML, mas ficam escondidos no desktop.
+   ===================================================================== */
+
+.fluxo-mobile, .dias-mobile, .dica-mobile { display: none; }
+
+@media (max-width: 720px) {
+  html { -webkit-text-size-adjust: 100%; }
+  body { padding-bottom: env(safe-area-inset-bottom); }
+  button, select, input, label { -webkit-tap-highlight-color: rgba(47, 95, 168, 0.15); }
+
+  /* ---------- Cabeçalho compacto ---------- */
+  .cabecalho {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 12px 16px;
+    padding-top: max(12px, env(safe-area-inset-top));
+    gap: 8px;
+  }
+  .cabecalho-titulos { flex: 1 1 100%; }
+  .cabecalho-titulos h1 { font-size: 1.05rem; }
+  .cabecalho-titulos p { font-size: 0.72rem; }
+  .cabecalho .btn-secundario { min-height: 38px; font-size: 0.78rem; padding: 8px 12px; }
+  .area-docente { position: static; }
+  .popover-senha {
+    left: 16px;
+    right: 16px;
+    width: auto;
+    top: 100%;
+    margin-top: 4px;
+  }
+  .cabecalho { position: relative; }
+  #input-senha-docente { font-size: 16px; min-height: 44px; } /* 16px evita o zoom automático do iOS */
+  .popover-senha-botoes .btn-primario,
+  .popover-senha-botoes .btn-secundario { min-height: 42px; font-size: 0.9rem; }
+
+  /* ---------- Abas fixas no topo, ocupando a largura ---------- */
+  .abas {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    padding: 0 8px;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+  .abas::-webkit-scrollbar { display: none; }
+  .aba-botao { flex: 1 0 auto; padding: 13px 12px; font-size: 0.88rem; white-space: nowrap; }
+
+  main { padding: 14px 12px 40px; }
+
+  /* ---------- Barras de seleção roláveis na horizontal ---------- */
+  .seletor-periodos,
+  .chips-periodo-mobile,
+  .dias-mobile {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-left: -12px;
+    margin-right: -12px;
+    padding: 2px 12px 6px;
+    scroll-snap-type: x proximity;
+  }
+  .seletor-periodos::-webkit-scrollbar,
+  .chips-periodo-mobile::-webkit-scrollbar,
+  .dias-mobile::-webkit-scrollbar { display: none; }
+  .btn-periodo { flex: 0 0 auto; min-height: 40px; scroll-snap-align: start; }
+
+  .barra-controle-horarios { gap: 10px; }
+  .seletor-modo { max-width: 100%; overflow-x: auto; }
+  .btn-modo { min-height: 38px; white-space: nowrap; }
+  .acoes-salvar-horario { margin-left: 0; width: 100%; justify-content: space-between; }
+
+  /* ---------- Botões de ação: grandes, em grade de 2 ---------- */
+  .acoes-fluxograma { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .acoes-fluxograma button { min-height: 44px; font-size: 0.8rem; padding: 8px 10px; line-height: 1.2; }
+  .acoes-proposta-topo button,
+  .btn-salvar-horario { min-height: 44px; }
+  .acoes-proposta-topo { flex-direction: column; }
+
+  .legenda { gap: 8px 12px; font-size: 0.74rem; }
+  .legenda-dica { display: none; }
+  .dica-horarios { font-size: 0.8rem; }
+
+  /* ---------- Fluxograma: troca a tabela por um período por vez ---------- */
+  .fluxo-desktop { display: none; }
+  .fluxo-mobile { display: block; }
+  .dica-mobile { display: block; font-size: 0.75rem; color: var(--cinza-600); text-align: center; margin: 10px 0 0; }
+
+  .chips-periodo-mobile { display: flex; gap: 6px; margin-bottom: 10px; }
+  .chip-periodo-mobile {
+    position: relative;
+    flex: 0 0 auto;
+    min-width: 52px;
+    min-height: 42px;
+    border: 1px solid var(--cinza-400);
+    background: var(--branco);
+    border-radius: 21px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--texto);
+    scroll-snap-align: start;
+    cursor: pointer;
+  }
+  .chip-periodo-mobile.completo { background: var(--verde-claro); border-color: var(--verde); color: var(--verde); }
+  .chip-periodo-mobile.ativo { background: var(--azul-escuro); border-color: var(--azul-escuro); color: var(--branco); }
+  .chip-livres {
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    background: #c99a1f;
+    color: var(--branco);
+    font-size: 0.62rem;
+    min-width: 18px;
+    height: 18px;
+    line-height: 18px;
+    border-radius: 9px;
+    padding: 0 4px;
+  }
+
+  .cabecalho-periodo-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: var(--azul-escuro);
+    color: var(--branco);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .cabecalho-periodo-mobile strong { display: block; font-size: 1rem; }
+  .cabecalho-periodo-mobile span { font-size: 0.72rem; color: #c7d3ea; }
+  .btn-marcar-periodo-mobile { margin: 0; padding: 8px 10px; font-size: 0.75rem; min-height: 36px; flex-shrink: 0; }
+
+  .lista-cards-mobile { display: flex; flex-direction: column; gap: 10px; }
+  .lista-cards-mobile .card-disciplina { min-width: 0; min-height: 0; padding: 10px 12px; }
+  .lista-cards-mobile .card-nome { font-size: 0.95rem; margin: 8px 0; }
+  .lista-cards-mobile .card-rodape { font-size: 0.75rem; }
+  .lista-cards-mobile .card-creditos { font-size: 0.8rem; }
+  .lista-cards-mobile .card-topo { gap: 10px; justify-content: flex-start; }
+  .lista-cards-mobile .card-topo .card-creditos { margin-left: auto; }
+  .lista-cards-mobile .check-concluida,
+  .lista-cards-mobile .check-cursando {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 36px;
+    padding: 0 10px 0 6px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--cinza-200);
+    font-size: 0.75rem;
+  }
+  .lista-cards-mobile .check-concluida::after { content: "concluída"; color: var(--cinza-600); }
+  .lista-cards-mobile .check-concluida input,
+  .lista-cards-mobile .check-cursando input { width: 20px; height: 20px; }
+  .lista-cards-mobile .card-disciplina.caminho-disponivel::after { top: -9px; right: 10px; }
+
+  /* Painel "pré-requisitos / libera" da disciplina tocada */
+  .info-selecionada-mobile {
+    background: var(--branco);
+    border: 2px solid var(--azul-escuro);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .info-sel-topo { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; font-size: 0.88rem; }
+  .btn-fechar-info-mobile {
+    border: none;
+    background: var(--cinza-100);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .info-sel-bloco { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .info-sel-titulo { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .info-sel-prereq .info-sel-titulo { color: var(--azul); }
+  .info-sel-dep .info-sel-titulo { color: var(--laranja); }
+  .link-disciplina-mobile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+    width: 100%;
+    min-height: 40px;
+    border: 1px solid var(--cinza-200);
+    background: var(--cinza-100);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    color: var(--texto);
+    cursor: pointer;
+  }
+  .info-sel-prereq .link-disciplina-mobile { border-left: 3px solid var(--azul); }
+  .info-sel-dep .link-disciplina-mobile { border-left: 3px solid var(--laranja); }
+  .link-disciplina-mobile.ok { background: #e9f6ee; }
+  .link-status { width: 14px; text-align: center; color: var(--verde); font-weight: 700; }
+  .link-codigo { font-weight: 700; color: var(--azul); }
+  .link-nome { flex: 1; }
+  .link-periodo { font-size: 0.7rem; color: var(--cinza-600); }
+
+  /* Flexíveis com área de toque maior */
+  .item-flexivel { min-height: 46px; }
+  .item-flexivel input { width: 20px; height: 20px; }
+
+  /* ---------- Matrizes semanais: um dia por vez ---------- */
+  .dias-mobile { display: flex; gap: 6px; margin-bottom: 8px; }
+  .btn-dia-mobile {
+    flex: 1 0 auto;
+    min-width: 50px;
+    min-height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    border: 1px solid var(--cinza-400);
+    background: var(--branco);
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--texto);
+    scroll-snap-align: start;
+  }
+  .btn-dia-mobile .dia-nome { font-size: 0.85rem; font-weight: 700; }
+  .btn-dia-mobile .dia-qtd { font-size: 0.68rem; color: var(--cinza-600); }
+  .btn-dia-mobile .dia-qtd-conflito { color: var(--laranja); font-weight: 700; }
+  .btn-dia-mobile.ativo { background: var(--azul-escuro); border-color: var(--azul-escuro); color: var(--branco); }
+  .btn-dia-mobile.ativo .dia-qtd { color: #c7d3ea; }
+  .btn-dia-mobile.ativo .dia-qtd-conflito { color: #ffc48f; }
+
+  .tabela-matriz.matriz-por-dia { min-width: 0; table-layout: auto; }
+  .tabela-matriz.matriz-por-dia [data-dia] { display: none; }
+  .tabela-matriz.matriz-por-dia[data-dia-ativo="Segunda"] [data-dia="Segunda"],
+  .tabela-matriz.matriz-por-dia[data-dia-ativo="Terça"] [data-dia="Terça"],
+  .tabela-matriz.matriz-por-dia[data-dia-ativo="Quarta"] [data-dia="Quarta"],
+  .tabela-matriz.matriz-por-dia[data-dia-ativo="Quinta"] [data-dia="Quinta"],
+  .tabela-matriz.matriz-por-dia[data-dia-ativo="Sexta"] [data-dia="Sexta"],
+  .tabela-matriz.matriz-por-dia[data-dia-ativo="Sábado"] [data-dia="Sábado"] { display: table-cell; }
+  .tabela-matriz.matriz-por-dia thead th { width: auto; }
+  .tabela-matriz.matriz-por-dia .th-horario { width: 74px; font-size: 0.68rem; }
+  .tabela-matriz.matriz-por-dia .td-matriz { height: 46px; text-align: left; padding: 6px 10px; }
+  .tabela-matriz.matriz-por-dia .td-vazia { text-align: center; }
+  .tabela-matriz.matriz-por-dia .aula-nome { font-size: 0.85rem; }
+  .tabela-matriz.matriz-por-dia .aula-codigo { font-size: 0.72rem; }
+  .tabela-matriz.matriz-por-dia .aula-professor { font-size: 0.7rem; }
+  .tabela-matriz.matriz-por-dia .aula-conflito-item .aula-nome { font-size: 0.78rem; }
+  .btn-remover-optativa-matriz { font-size: 0.95rem; padding: 4px 4px 8px 10px; }
+
+  .filtros-departamento { gap: 8px; }
+  .filtro-depto { min-height: 32px; font-size: 0.75rem; }
+  .legenda-ofertadas .chip-legenda { font-size: 0.68rem; }
+
+  /* ---------- Cartões editáveis (Horários / Proposta) ---------- */
+  .cartao-horario { padding: 12px; }
+  .cartao-horario-topo { align-items: flex-start; font-size: 0.85rem; }
+  .linha-horario { display: grid; grid-template-columns: 1fr auto 1fr; gap: 6px; padding: 10px; position: relative; }
+  .linha-horario select,
+  .linha-horario input { font-size: 16px; min-height: 42px; width: 100%; }
+  .linha-horario select { grid-column: 1 / -1; width: calc(100% - 48px); }
+  .linha-horario .ate { align-self: center; }
+  .linha-horario .campo-turma,
+  .linha-horario .campo-sala,
+  .linha-horario .campo-professor { width: 100%; grid-column: 1 / -1; }
+  .linha-horario .campo-turma { grid-column: 1 / 2; }
+  .linha-horario .campo-sala { grid-column: 2 / -1; }
+  .cartao-proposta .linha-horario .campo-turma { grid-column: 1 / -1; }
+  .chip-fora-alvo { grid-column: 1 / -1; justify-self: start; }
+  .btn-remover-slot,
+  .btn-remover-slot-proposta {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 42px;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  .acoes-cartao-horario button { min-height: 40px; flex: 1 1 auto; }
+  .opcao-optativa { flex-direction: column; align-items: stretch; }
+  .btn-usar-optativa { min-height: 40px; }
+  .card-departamento { max-width: 100%; text-align: left; }
+  .cartao-somente-leitura .cartao-horario-topo { flex-direction: column; gap: 4px; }
+
+  .linha-optativa-config { min-height: 46px; }
+  .linha-optativa-config input[type="checkbox"] { width: 20px; height: 20px; }
+  .form-nova-optativa input,
+  .form-nova-optativa button { font-size: 16px; min-height: 44px; }
+  .form-nova-optativa input[type="text"] { min-width: 100%; }
+  .form-nova-optativa input[type="number"],
+  .form-nova-optativa button { flex: 1; }
+
+  /* ---------- Painel "Meu horário" ---------- */
+  .painel-meu-horario { padding: 12px; }
+  .lista-disciplinas-cursando li { margin-bottom: 6px; }
+  .seletor-turma-cursando { font-size: 16px; min-height: 36px; margin: 4px 0 0; display: block; }
+
+  .lista-outras-ofertas { grid-template-columns: 1fr; }
+  .rodape { padding: 16px 16px calc(16px + env(safe-area-inset-bottom)); }
+}
+
+/* Celulares bem estreitos (≤ 360px) */
+@media (max-width: 360px) {
+  .acoes-fluxograma { grid-template-columns: 1fr; }
+  .cabecalho-periodo-mobile { flex-direction: column; align-items: stretch; }
+}
